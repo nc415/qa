@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+{% block content %}
+  <h2>Sign up</h2>
+  <form method="post">
+   <div class="row">
+   <div class="col-xs-12 col-sm-6 col-lg-6">
+    {% csrf_token %}
+   {{ form|as_bootstrap}}
+    <input class="btn pull-left btn-success" type="submit" value="Sign Up"></input>
+  </form>
+  </div>
+  </div>
+{% endblock %}

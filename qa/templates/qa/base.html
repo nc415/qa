@@ -1,0 +1,86 @@
+{% load staticfiles %}
+<div class="topbar"></div>
+<div class="container">
+<title>Programmatic QA</title>
+<link rel="icon" type="image/png" href="static/qa/icon.ico">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Lobster" rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="{% static 'css/qa.css' %}" rel="stylesheet"/>
+<div class="main-container">
+<div class="page-header">
+  <img width="50px" src="https://i.pinimg.com/236x/8a/c8/d0/8ac8d0851b6d49a87125bd1a64403509--question-mark-great-photos.jpg" /><br><p>
+  <div class="titles">
+      {% block title_buttons_block %}<a class="btn btn-md btn-default pull-right" href="#search" style="margin-left: 10px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Find</a><a class="btn btn-md btn-primary pull-right" href="{% url 'qa_create_question' %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ask Question</a>{% endblock %}<h1><a href="{% url 'qa_index' %}"><green>Programmatic</green> </a><small>Question and Answer</small></h1>
+    </div>
+</div>
+<div class="container">
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+{% block content %}
+
+{% endblock content %}
+ <div id="search">
+   <button type="button" class="close">×</button>
+   <form method="GET" action="{% url 'qa_search' %}">
+     <input type="search" value="" name="word" placeholder="type keyword(s) here" />
+     <input class="btn btn-md btn-warning" type="submit" value="Find" />
+   </form>
+   
+ </div>
+</div>
+<hr>
+<center>
+
+  <a data-toggle="modal" data-target="#apiModal">About</a> ·
+  <small><a href="/admin">Admin Panel</a></small></center>
+ <br/><br/>
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="apiModal" tabindex="-1" role="dialog" aria-labelledby="APIModal" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-blog" aria-hidden="true"></span> About</h4>
+       </div>
+       <div class="modal-body">
+         <ul>
+           <li>
+             <b>about</b>
+           </li>
+          </ul>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+</div>
+{% block js %}
+<script>
+$(function () {
+  $('a[href="#search"]').on('click', function(event) {
+    event.preventDefault();
+    $('#search').addClass('open');
+    $('#search > form > input[type="search"]').focus();
+  });
+
+  $('#search, #search button.close').on('click keyup', function(event) {
+    if (event.target == this || event.target.className == 'close' || event.keyCode == 27) {
+      $(this).removeClass('open');
+    }
+  });
+
+});
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+{% endblock js %}
+{%block extra_js %}{% endblock extra_js %}

@@ -1,0 +1,29 @@
+{% extends 'qa/base.html' %}
+{% load django_markdown %}
+{% load bootstrap_tags %}
+{% block title_buttons_block %}
+{% endblock %}
+{% block content %}
+
+  {% if message %}
+  <strong>Enter a valid Question!</strong>
+  {% endif %}
+
+  <form method="post" action="{% block action_url %}{% url 'qa_create_question' %}{% endblock action_url %}">
+    
+    {% csrf_token %}
+    <fieldset>
+        <legend>{{ title }}</legend>
+       {{ form|as_bootstrap }}
+        <button type="submit" class="btn btn-primary" >Submit</button>
+   
+  </form>
+
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+  {% markdown_editor "#id_description" %}
+  {% markdown_media %}
+{% endblock extra_js %}
